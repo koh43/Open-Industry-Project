@@ -10,4 +10,4 @@
 metadata/_edit_lock_ = true
 
 [node name="Box" parent="." index="1" instance=ExtResource("3_55iuq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.65266, 2.52779, 6.81966)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.07925, 3.29159, 3.85279)

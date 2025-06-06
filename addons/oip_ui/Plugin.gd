@@ -78,7 +78,6 @@ func _enter_tree() -> void:
 	_separator = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(1).get_child(1).get_child(1).get_child(0).get_child(0).get_child(0).get_child(0).get_child(1).get_child(0).get_child(1).get_child(0).get_child(0).get_child(0).get_child(14)
 	print("Node type at path: ", _separator)
 
-	eheheh it s a prak bro lololol
 	_camera_button = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(1).get_child(1).get_child(1).get_child(0).get_child(0).get_child(0).get_child(0).get_child(1).get_child(0).get_child(1).get_child(0).get_child(0).get_child(0).get_child(15)
 
 	_debugger_button = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(1).get_child(1).get_child(1).get_child(0).get_child(0).get_child(1).get_child(0).get_child(15).get_child(0).get_child(1)
