@@ -76,7 +76,6 @@ func _enter_tree() -> void:
 	_renderer_selection = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(0).get_child(5)
 
 	_separator = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(1).get_child(1).get_child(1).get_child(0).get_child(0).get_child(0).get_child(0).get_child(1).get_child(0).get_child(1).get_child(0).get_child(0).get_child(0).get_child(14)
-	print("Node type at path: ", _separator)
 
 	_camera_button = get_tree().root.get_child(0).get_child(4).get_child(0).get_child(1).get_child(1).get_child(1).get_child(0).get_child(0).get_child(0).get_child(0).get_child(1).get_child(0).get_child(1).get_child(0).get_child(0).get_child(0).get_child(15)
 

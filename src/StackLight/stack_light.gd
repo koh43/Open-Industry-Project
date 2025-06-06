@@ -130,19 +130,19 @@ func _get_property_list() -> Array:
 	properties.append({
 		"name": "enable_comms",
 		"type": TYPE_BOOL,
-		"usage": PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		"usage": PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 	})
 	properties.append({
 		"name": "tag_groups",
 		"type": 0,
-		"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE,
+		"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE if false else PROPERTY_USAGE_NONE,
 		"hint": 0,
 		"hint_string": "tag_group_enum"
 	})
 	properties.append({
 		"name": "tag_name",
 		"type": TYPE_STRING,
-		"usage": PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		"usage": PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 	})
 	return properties
 
@@ -187,19 +187,19 @@ func _ready() -> void:
 
 func _enter_tree() -> void:
 	SimulationEvents.simulation_started.connect(_on_simulation_started)
-	OIPComms.tag_group_polled.connect(_tag_group_polled)
+#	OIPComms.tag_group_polled.connect(_tag_group_polled)
 
 	_tag_group_original = tag_group_name
 	if tag_group_name.is_empty():
-		tag_group_name = OIPComms.get_tag_groups()[0]
+##		tag_group_name = OIPComms.get_tag_groups()[0]
 
 	_tag_groups = tag_group_name
 
-	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = OIPComms.get_enable_comms())
+##	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = false)
 
 func _exit_tree() -> void:
 	SimulationEvents.simulation_started.disconnect(_on_simulation_started)
-	OIPComms.tag_group_polled.disconnect(_tag_group_polled)
+#	OIPComms.tag_group_polled.disconnect(_tag_group_polled)
 	# Disconnect signals from all segments
 	if _segments_container:
 		for i in range(_segments_container.get_child_count()):
@@ -212,7 +212,7 @@ func use() -> void:
 
 func _on_simulation_started() -> void:
 	if enable_comms:
-		OIPComms.register_tag(tag_group_name, tag_name, 1)
+#		OIPComms.register_tag(tag_group_name, tag_name, 1)
 
 func _tag_group_polled(tag_group_name_param: String) -> void:
 	if not enable_comms:
@@ -221,7 +221,7 @@ func _tag_group_polled(tag_group_name_param: String) -> void:
 	if tag_group_name_param != tag_group_name:
 		return
 
-	light_value = OIPComms.read_int32(tag_group_name, tag_name)
+##	light_value = OIPComms.read_int32(tag_group_name, tag_name)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_TRANSFORM_CHANGED:

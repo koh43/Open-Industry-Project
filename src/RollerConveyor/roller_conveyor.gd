@@ -12,47 +12,48 @@ const RADIUS: float = 0.12
 const CIRCUMFERENCE: float = 2.0 * PI * RADIUS
 
 @export_custom(PROPERTY_HINT_NONE, "suffix:m/s") var speed: float = 1.0:
-	set(value):
-		if value == speed:
-			return
-		speed = value
-		speed_changed.emit(value)
-		_update_conveyor_velocity()
+    set(value):
+        if value == speed:
+            return
+        speed = value
+        speed_changed.emit(value)
+        _update_conveyor_velocity()
 
-		if _register_speed_tag_ok and _speed_tag_group_init:
-			OIPComms.write_float32(speed_tag_group_name, speed_tag_name, value)
-		if _register_running_tag_ok and _running_tag_group_init:
-			OIPComms.write_bit(running_tag_group_name, running_tag_name, value > 0.0)
+        # Temporarily disable OIPComms
+        #if _register_speed_tag_ok and _speed_tag_group_init:
+        #	OIPComms.write_float32(speed_tag_group_name, speed_tag_name, value)
+        #if _register_running_tag_ok and _running_tag_group_init:
+        #	OIPComms.write_bit(running_tag_group_name, running_tag_name, value > 0.0)
 
 @export_range(-60, 60, 1, "degrees") var skew_angle: float = 0.0:
-	set(value):
-		if skew_angle != value:
-			skew_angle = value
-			roller_skew_angle_changed.emit(skew_angle)
-			_update_conveyor_velocity()
+    set(value):
+        if skew_angle != value:
+            skew_angle = value
+            roller_skew_angle_changed.emit(skew_angle)
+            _update_conveyor_velocity()
 
 @export_category("Communications")
 @export var enable_comms := false:
-	set(value):
-		enable_comms = value
-		notify_property_list_changed()
+    set(value):
+        enable_comms = value
+        notify_property_list_changed()
 @export var speed_tag_group_name: String
 @export_custom(0, "tag_group_enum") var speed_tag_groups:
-	set(value):
-		speed_tag_group_name = value
-		speed_tag_groups = value
+    set(value):
+        speed_tag_group_name = value
+        speed_tag_groups = value
 @export var speed_tag_name := ""
 @export var running_tag_group_name: String
 @export_custom(0, "tag_group_enum") var running_tag_groups:
-	set(value):
-		running_tag_group_name = value
-		running_tag_groups = value
+    set(value):
+        running_tag_group_name = value
+        running_tag_groups = value
 @export var running_tag_name := ""
 
 var running := false:
-	set(value):
-		running = value
-		set_physics_process(running)
+    set(value):
+        running = value
+        set_physics_process(running)
 
 var _register_speed_tag_ok := false
 var _register_running_tag_ok := false
@@ -61,8 +62,8 @@ var _running_tag_group_init := false
 var _speed_tag_group_original: String
 var _running_tag_group_original: String
 var _enable_comms_changed: bool = false:
-	set(value):
-		notify_property_list_changed()
+    set(value):
+        notify_property_list_changed()
 var _last_size := Vector3(1.525, 0.24, 1.524)
 var _last_length := 1.525
 var _last_width := 1.524
@@ -73,45 +74,46 @@ var _roller_material: BaseMaterial3D
 var _simple_conveyor_shape: StaticBody3D
 
 func _init() -> void:
-	super._init()
-	size_default = Vector3(1.525, 0.24, 1.524)
-
+    super._init()
+    size_default = Vector3(1.525, 0.24, 1.524)
 
 static func _get_constrained_size(new_size: Vector3) -> Vector3:
-	return Vector3(max(1.5, new_size.x), 0.24, max(0.10, new_size.z))
-
+    return Vector3(max(1.5, new_size.x), 0.24, max(0.10, new_size.z))
 
 func _enter_tree() -> void:
-	super._enter_tree()
-	
-	_speed_tag_group_original = speed_tag_group_name
-	_running_tag_group_original = running_tag_group_name
-	
-	if speed_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
-		speed_tag_group_name = OIPComms.get_tag_groups()[0]
-	if running_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
-		running_tag_group_name = OIPComms.get_tag_groups()[0]
-	
-	speed_tag_groups = speed_tag_group_name
-	running_tag_groups = running_tag_group_name
-	
-	if SimulationEvents:
-		SimulationEvents.simulation_started.connect(_on_simulation_started)
-		SimulationEvents.simulation_ended.connect(_on_simulation_ended)
-		running = SimulationEvents.simulation_running
+    super._enter_tree()
+    
+    _speed_tag_group_original = speed_tag_group_name
+    _running_tag_group_original = running_tag_group_name
+    
+    # Temporarily disable OIPComms initialization
+    #if speed_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
+##    #	speed_tag_group_name = OIPComms.get_tag_groups()[0]
+    #if running_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
+##    #	running_tag_group_name = OIPComms.get_tag_groups()[0]
+    
+    speed_tag_groups = speed_tag_group_name
+    running_tag_groups = running_tag_group_name
+    
+    if SimulationEvents:
+        SimulationEvents.simulation_started.connect(_on_simulation_started)
+        SimulationEvents.simulation_ended.connect(_on_simulation_ended)
+        running = SimulationEvents.simulation_running
 
-	OIPComms.tag_group_initialized.connect(_tag_group_initialized)
-	OIPComms.tag_group_polled.connect(_tag_group_polled)
-	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = OIPComms.get_enable_comms())
+    # Temporarily disable OIPComms connections
+    #OIPComms.tag_group_initialized.connect(_tag_group_initialized)
+    #OIPComms.tag_group_polled.connect(_tag_group_polled)
+#    #OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = false)
 
 func _exit_tree() -> void:
-	if SimulationEvents:
-		SimulationEvents.simulation_started.disconnect(_on_simulation_started)
-		SimulationEvents.simulation_ended.disconnect(_on_simulation_ended)
+    if SimulationEvents:
+        SimulationEvents.simulation_started.disconnect(_on_simulation_started)
+        SimulationEvents.simulation_ended.disconnect(_on_simulation_ended)
 
-	OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
-	OIPComms.tag_group_polled.disconnect(_tag_group_polled)
-	super._exit_tree()
+    # Temporarily disable OIPComms disconnections
+    #OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
+    #OIPComms.tag_group_polled.disconnect(_tag_group_polled)
+    super._exit_tree()
 
 func _ready() -> void:
 	var mesh_instance1 := get_node("ConvRoller/ConvRollerL") as MeshInstance3D
@@ -147,26 +149,25 @@ func _physics_process(delta: float) -> void:
 		pass
 
 func _validate_property(property: Dictionary) -> void:
-	var property_name: String = property["name"]
+    var property_name: String = property["name"]
 
-	if property_name == "enable_comms":
-		property["usage"] = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
-	elif property_name == "speed_tag_group_name":
-		property["usage"] = PROPERTY_USAGE_STORAGE
-	elif property_name == "speed_tag_groups":
-		property["usage"] = (PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE 
-				if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE)
-	elif property_name == "speed_tag_name":
-		property["usage"] = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
-	elif property_name == "running_tag_group_name":
-		property["usage"] = PROPERTY_USAGE_STORAGE
-	elif property_name == "running_tag_groups":
-		property["usage"] = (PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE 
-				if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE)
-	elif property_name == "running_tag_name":
-		property["usage"] = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
-	elif property_name in ["update_rate", "tag"]:
-		property["usage"] = PROPERTY_USAGE_STORAGE
+    # Temporarily disable OIPComms property validation
+    if property_name == "enable_comms":
+        property["usage"] = PROPERTY_USAGE_NONE  # Disable for now
+    elif property_name == "speed_tag_group_name":
+        property["usage"] = PROPERTY_USAGE_STORAGE
+    elif property_name == "speed_tag_groups":
+        property["usage"] = PROPERTY_USAGE_NONE  # Disable for now
+    elif property_name == "speed_tag_name":
+        property["usage"] = PROPERTY_USAGE_NONE  # Disable for now
+    elif property_name == "running_tag_group_name":
+        property["usage"] = PROPERTY_USAGE_STORAGE
+    elif property_name == "running_tag_groups":
+        property["usage"] = PROPERTY_USAGE_NONE  # Disable for now
+    elif property_name == "running_tag_name":
+        property["usage"] = PROPERTY_USAGE_NONE  # Disable for now
+    elif property_name in ["update_rate", "tag"]:
+        property["usage"] = PROPERTY_USAGE_STORAGE
 
 
 func _property_can_revert(property: StringName) -> bool:
@@ -205,8 +206,8 @@ func _on_simulation_started() -> void:
 	running = true
 	_update_conveyor_velocity()
 	if enable_comms:
-		_register_speed_tag_ok = OIPComms.register_tag(speed_tag_group_name, speed_tag_name, 1)
-		_register_running_tag_ok = OIPComms.register_tag(running_tag_group_name, running_tag_name, 1)
+##		_register_speed_tag_ok = OIPComms.register_tag(speed_tag_group_name, speed_tag_name, 1)
+##		_register_running_tag_ok = OIPComms.register_tag(running_tag_group_name, running_tag_name, 1)
 
 
 func _on_simulation_ended() -> void:
@@ -336,7 +337,7 @@ func _tag_group_polled(tag_group_name_param: String) -> void:
 		return
 
 	if tag_group_name_param == speed_tag_group_name and _speed_tag_group_init:
-		speed = OIPComms.read_float32(speed_tag_group_name, speed_tag_name)
+##		speed = OIPComms.read_float32(speed_tag_group_name, speed_tag_name)
 
 func _setup_conveyor_physics() -> void:
 	if _simple_conveyor_shape:

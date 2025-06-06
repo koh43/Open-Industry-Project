@@ -21,7 +21,7 @@ var _scenario: RID
 			var red = round(value.r * 255)
 			var green = round(value.g * 255)
 			var blue = round(value.b * 255)
-			OIPComms.write_int32(tag_group_name, tag_name, red * 0x10000 + green * 0x100 + blue)
+#			OIPComms.write_int32(tag_group_name, tag_name, red * 0x10000 + green * 0x100 + blue)
 		color_detected = value
 
 @export var color_map: Dictionary[Color, int] = {
@@ -33,7 +33,7 @@ var _scenario: RID
 @export var color_value: int = 0:
 	set(value):
 		if _register_tag_ok and _tag_group_init and value != color_value:
-			OIPComms.write_int32(tag_group_name, tag_name, value)
+#			OIPComms.write_int32(tag_group_name, tag_name, value)
 		color_value = value
 
 var _register_tag_ok := false
@@ -60,11 +60,11 @@ func _validate_property(property: Dictionary) -> void:
 	elif property.name == "tag_group_name":
 		property.usage = PROPERTY_USAGE_STORAGE
 	elif property.name == "enable_comms":
-		property.usage = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 	elif property.name == "tag_groups":
-		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if false else PROPERTY_USAGE_NONE
 	elif property.name == "tag_name":
-		property.usage = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 
 
 func _property_can_revert(property: StringName) -> bool:
@@ -89,19 +89,19 @@ func _enter_tree() -> void:
 
 	_tag_group_original = tag_group_name
 	if tag_group_name.is_empty():
-		tag_group_name = OIPComms.get_tag_groups()[0]
+##		tag_group_name = OIPComms.get_tag_groups()[0]
 
 	tag_groups = tag_group_name
 
 	SimulationEvents.simulation_started.connect(_on_simulation_started)
-	OIPComms.tag_group_initialized.connect(_tag_group_initialized)
-	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = OIPComms.get_enable_comms())
+#	OIPComms.tag_group_initialized.connect(_tag_group_initialized)
+##	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = false)
 
 
 func _exit_tree() -> void:
 	RenderingServer.free_rid(_instance)
 	SimulationEvents.simulation_started.disconnect(_on_simulation_started)
-	OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
+#	OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
 
 
 func _physics_process(_delta: float) -> void:
@@ -143,7 +143,7 @@ func use() -> void:
 
 func _on_simulation_started() -> void:
 	if enable_comms:
-		_register_tag_ok = OIPComms.register_tag(tag_group_name, tag_name, 0)
+##		_register_tag_ok = OIPComms.register_tag(tag_group_name, tag_name, 0)
 
 
 func _tag_group_initialized(tag_group_name_param: String) -> void:
@@ -153,4 +153,4 @@ func _tag_group_initialized(tag_group_name_param: String) -> void:
 			var red = round(color_detected.r * 255)
 			var green = round(color_detected.g * 255)
 			var blue = round(color_detected.b * 255)
-			OIPComms.write_int32(tag_group_name, tag_name, red * 0x10000 + green * 0x100 + blue)
+#			OIPComms.write_int32(tag_group_name, tag_name, red * 0x10000 + green * 0x100 + blue)

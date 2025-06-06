@@ -88,11 +88,11 @@ func _init() -> void:
 
 
 func _enter_tree() -> void:
-	OIPComms.enable_comms_changed.connect(notify_property_list_changed)
+#	OIPComms.enable_comms_changed.connect(notify_property_list_changed)
 
 
 func _exit_tree() -> void:
-	OIPComms.enable_comms_changed.disconnect(notify_property_list_changed)
+#	OIPComms.enable_comms_changed.disconnect(notify_property_list_changed)
 
 
 func _ready() -> void:

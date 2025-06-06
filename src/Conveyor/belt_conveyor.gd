@@ -34,10 +34,10 @@ signal speed_changed
 
 		# dont write until the group is initialized
 		if _register_speed_tag_ok and _speed_tag_group_init:
-			OIPComms.write_float32(speed_tag_group_name, speed_tag_name, value)
+#			OIPComms.write_float32(speed_tag_group_name, speed_tag_name, value)
 
 		if _register_running_tag_ok and _running_tag_group_init:
-			OIPComms.write_bit(running_tag_group_name, running_tag_name, value > 0.0)
+#			OIPComms.write_bit(running_tag_group_name, running_tag_name, value > 0.0)
 
 @export var belt_physics_material: PhysicsMaterial:
 	get:
@@ -92,19 +92,19 @@ var _enable_comms_changed: bool = false:
 
 func _validate_property(property: Dictionary) -> void:
 	if property.name == "enable_comms":
-		property.usage = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 	elif property.name == "speed_tag_group_name":
 		property.usage = PROPERTY_USAGE_STORAGE
 	elif property.name == "speed_tag_groups":
-		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if false else PROPERTY_USAGE_NONE
 	elif property.name == "speed_tag_name":
-		property.usage = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 	elif property.name == "running_tag_group_name":
 		property.usage = PROPERTY_USAGE_STORAGE
 	elif property.name == "running_tag_groups":
-		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_NO_INSTANCE_STATE if false else PROPERTY_USAGE_NONE
 	elif property.name == "running_tag_name":
-		property.usage = PROPERTY_USAGE_DEFAULT if OIPComms.get_enable_comms() else PROPERTY_USAGE_NONE
+		property.usage = PROPERTY_USAGE_DEFAULT if false else PROPERTY_USAGE_NONE
 
 
 func _property_can_revert(property: StringName) -> bool:
@@ -160,26 +160,26 @@ func _enter_tree() -> void:
 	_speed_tag_group_original = speed_tag_group_name
 	_running_tag_group_original = running_tag_group_name
 	
-	if speed_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
-		speed_tag_group_name = OIPComms.get_tag_groups()[0]
-	if running_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
-		running_tag_group_name = OIPComms.get_tag_groups()[0]
+#	if speed_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
+##		speed_tag_group_name = OIPComms.get_tag_groups()[0]
+#	if running_tag_group_name.is_empty() and OIPComms.get_tag_groups().size() > 0:
+##		running_tag_group_name = OIPComms.get_tag_groups()[0]
 	
 	speed_tag_groups = speed_tag_group_name
 	running_tag_groups = running_tag_group_name
 	
 	SimulationEvents.simulation_started.connect(_on_simulation_started)
 	SimulationEvents.simulation_ended.connect(_on_simulation_ended)
-	OIPComms.tag_group_initialized.connect(_tag_group_initialized)
-	OIPComms.tag_group_polled.connect(_tag_group_polled)
-	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = OIPComms.get_enable_comms())
+#	OIPComms.tag_group_initialized.connect(_tag_group_initialized)
+#	OIPComms.tag_group_polled.connect(_tag_group_polled)
+##	OIPComms.enable_comms_changed.connect(func() -> void: _enable_comms_changed = false)
 
 
 func _exit_tree() -> void:
 	SimulationEvents.simulation_started.disconnect(_on_simulation_started)
 	SimulationEvents.simulation_ended.disconnect(_on_simulation_ended)
-	OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
-	OIPComms.tag_group_polled.disconnect(_tag_group_polled)
+#	OIPComms.tag_group_initialized.disconnect(_tag_group_initialized)
+#	OIPComms.tag_group_polled.disconnect(_tag_group_polled)
 	super._exit_tree()
 
 func _physics_process(delta: float) -> void:
@@ -197,8 +197,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_simulation_started() -> void:
 	if enable_comms:
-		_register_speed_tag_ok = OIPComms.register_tag(speed_tag_group_name, speed_tag_name, 1)
-		_register_running_tag_ok = OIPComms.register_tag(running_tag_group_name, running_tag_name, 1)
+##		_register_speed_tag_ok = OIPComms.register_tag(speed_tag_group_name, speed_tag_name, 1)
+##		_register_running_tag_ok = OIPComms.register_tag(running_tag_group_name, running_tag_name, 1)
 
 
 func _on_simulation_ended() -> void:
@@ -355,4 +355,4 @@ func _tag_group_polled(tag_group_name_param: String) -> void:
 		return
 
 	if tag_group_name_param == speed_tag_group_name and _speed_tag_group_init:
-		speed = OIPComms.read_float32(speed_tag_group_name, speed_tag_name)
+##		speed = OIPComms.read_float32(speed_tag_group_name, speed_tag_name)

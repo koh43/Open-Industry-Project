@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1rion8l6ftyd"]
+[gd_scene load_steps=5 format=3 uid="uid://d1rion8l6ftyd"]
 
 [ext_resource type="PackedScene" uid="uid://c3vcl2btogylt" path="res://parts/Main.tscn" id="1_d5unj"]
 [ext_resource type="PackedScene" uid="uid://dyhvoundu2kqc" path="res://parts/Building.tscn" id="2_qt7xj"]
 [ext_resource type="PackedScene" uid="uid://bq16fe5njnr2i" path="res://parts/Box.tscn" id="3_55iuq"]
+[ext_resource type="PackedScene" uid="uid://cj46ttsnj3oyi" path="res://assets/3DModels/Rack/Rack_assy.glb" id="4_bwp8a"]
 
 [node name="Main" instance=ExtResource("1_d5unj")]
 
@@ -11,3 +12,6 @@ metadata/_edit_lock_ = true
 
 [node name="Box" parent="." index="1" instance=ExtResource("3_55iuq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.07925, 3.29159, 3.85279)
+
+[node name="Rack_assy2" parent="." index="2" instance=ExtResource("4_bwp8a")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
