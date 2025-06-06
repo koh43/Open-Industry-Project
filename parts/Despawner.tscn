@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl73u0rvt2orv"]
 
-[ext_resource type="Script" uid="uid://dybkfctqmuyt6" path="res://src/Despawner/despawner.gd" id="1_f5xau"]
+[ext_resource type="Script" uid="uid://yl0jg812jmuj" path="res://src/Despawner/Despawner.cs" id="1_mmvvy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l3eno"]
 
@@ -12,7 +12,7 @@ material = SubResource("StandardMaterial3D_k7woa")
 
 [node name="Despawner" type="Node3D"]
 transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0)
-script = ExtResource("1_f5xau")
+script = ExtResource("1_mmvvy")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 8

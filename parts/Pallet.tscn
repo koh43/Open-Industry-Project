@@ -1,17 +1,16 @@
 [gd_scene load_steps=8 format=4 uid="uid://ccnjj66g0dynu"]
 
-[ext_resource type="Script" uid="uid://d36xqhpxykfxq" path="res://src/Pallet/pallet.gd" id="1_mbcks"]
+[ext_resource type="Script" uid="uid://dlqp10vrq51eq" path="res://src/Pallet/Pallet.cs" id="1_3gyy2"]
 [ext_resource type="Texture2D" uid="uid://b77uw0t6btlrk" path="res://assets/3DModels/Textures/Pallet_Mat_Base_Color.png" id="2_u7a1e"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vb87h"]
-rough = true
-absorbent = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kbfuw"]
 size = Vector3(2.4, 0.243, 2.18)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_adrf5"]
 resource_name = "Mat"
+cull_mode = 2
 albedo_texture = ExtResource("2_u7a1e")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_6uvh1"]
@@ -48,23 +47,19 @@ shadow_mesh = SubResource("ArrayMesh_6uvh1")
 
 [node name="Pallet" type="Node3D"]
 process_mode = 3
-top_level = true
-script = ExtResource("1_mbcks")
+script = ExtResource("1_3gyy2")
 metadata/_edit_group_ = true
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-process_mode = 3
 collision_layer = 8
-collision_mask = 15
-mass = 1000.0
+collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_vb87h")
-can_sleep = false
-continuous_cd = true
+freeze = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107211, 0)
 shape = SubResource("BoxShape3D_kbfuw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="Wood_Pallet" type="MeshInstance3D" parent="RigidBody3D"]
 mesh = SubResource("ArrayMesh_dllc6")
 skeleton = NodePath("")

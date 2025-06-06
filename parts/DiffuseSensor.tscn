@@ -1,9 +1,10 @@
 [gd_scene load_steps=16 format=4 uid="uid://kdpe7o4ec1fa"]
 
-[ext_resource type="Script" uid="uid://k4n13po1k8gj" path="res://src/DiffuseSensor/diffuse_sensor.gd" id="1_vtdj1"]
+[ext_resource type="Script" uid="uid://bre0sxsc6wyul" path="res://src/DiffuseSensor/DiffuseSensor.cs" id="1_1namx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fy1ij"]
 resource_name = "color"
+cull_mode = 2
 albedo_color = Color(1, 0.736647, 0, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -44,6 +45,7 @@ shadow_mesh = SubResource("ArrayMesh_vi0ms")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yefps"]
 resource_name = "color-2"
+cull_mode = 2
 albedo_color = Color(0.904365, 0.918013, 0.971896, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -84,6 +86,7 @@ shadow_mesh = SubResource("ArrayMesh_1laa0")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gf384"]
 resource_name = "color-4"
+cull_mode = 2
 albedo_color = Color(1, 0, 0, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -124,6 +127,7 @@ shadow_mesh = SubResource("ArrayMesh_n8c4j")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r32eh"]
 resource_name = "color-3"
+cull_mode = 2
 albedo_color = Color(0.538065, 0.538065, 0.538065, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -162,15 +166,23 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0umne")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vtdj1"]
-size = Vector3(0.26, 0.715, 0.425)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rh7b5"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7x1p7"]
-size = Vector3(0.185, 0.225, 0.185)
+[sub_resource type="CylinderMesh" id="CylinderMesh_shxoo"]
+material = SubResource("StandardMaterial3D_rh7b5")
+top_radius = 0.003
+bottom_radius = 0.003
+height = 6.0
+radial_segments = 4
 
 [node name="DiffuseSensor" type="Node3D"]
-script = ExtResource("1_vtdj1")
-tag_group_name = "TagGroup0"
+transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 0)
+script = ExtResource("1_1namx")
+DebugBeam = false
+collisionColor = Color(1, 1, 0, 1)
+scanColor = Color(1, 0, 0, 1)
 metadata/_edit_group_ = true
 
 [node name="Photoeye" type="Node3D" parent="."]
@@ -197,14 +209,12 @@ transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 mesh = SubResource("ArrayMesh_ie336")
 skeleton = NodePath("")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.294407, 0.183749)
-collision_layer = 3
+[node name="RayMarker" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.16, 0)
+visible = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.02659e-09, 0.0592939, 0.0287486)
-shape = SubResource("BoxShape3D_vtdj1")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.396, 0.0446391)
-shape = SubResource("BoxShape3D_7x1p7")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RayMarker"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 3)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("CylinderMesh_shxoo")

@@ -4,5 +4,6 @@
 
 [resource]
 resource_name = "WallMidMetal"
+cull_mode = 2
 albedo_texture = ExtResource("1_2hjyg")
 roughness = 0.5

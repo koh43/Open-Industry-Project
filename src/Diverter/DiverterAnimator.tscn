@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=4 uid="uid://bocnm2385urew"]
 
-[ext_resource type="Script" uid="uid://dtgqdb65nle3j" path="res://src/Diverter/diverter_animator.gd" id="1_lkgtf"]
+[ext_resource type="Script" uid="uid://whsjsukt7sag" path="res://src/Diverter/DiverterAnimator.cs" id="2_22iwn"]
 [ext_resource type="Material" uid="uid://cqwil2ylhbom7" path="res://assets/3DModels/Materials/Plastic2.tres" id="2_dedar"]
 [ext_resource type="ArrayMesh" uid="uid://q0oilec07t0d" path="res://assets/3DModels/Meshes/Diverter_Cube_003.res" id="3_rr5e7"]
 [ext_resource type="Material" uid="uid://ibm26sepn7l1" path="res://assets/3DModels/Materials/Plastic1.tres" id="3_v51v8"]
@@ -11,16 +11,18 @@
 [ext_resource type="Material" uid="uid://ddf4elviahmx8" path="res://assets/3DModels/Materials/Text.tres" id="6_adhrp"]
 [ext_resource type="Material" uid="uid://bubwx8yrh21n3" path="res://assets/3DModels/Materials/Metall1.tres" id="7_5ermq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lkgtf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gqkuy"]
 resource_name = "LampRed"
+cull_mode = 2
 albedo_color = Color(0.576515, 0.372541, 0.368615, 1)
 roughness = 0.654
 emission_enabled = true
 emission = Color(0.74902, 0.0509804, 0.0509804, 1)
 emission_energy_multiplier = 0.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_35xdy"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_77ore"]
 resource_name = "LampGreen"
+cull_mode = 2
 albedo_color = Color(0.427485, 0.596067, 0.423515, 1)
 roughness = 0.612
 emission_enabled = true
@@ -118,7 +120,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_8aygj"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_0qbfj"]
 resource_name = "Diverter_Cube_001"
 _surfaces = [{
 "aabb": AABB(-0.27, 0.00035702, -1.03098, 0.54, 0.815323, 2.05098),
@@ -166,7 +168,7 @@ _surfaces = [{
 "index_count": 180,
 "index_data": PackedByteArray("RgADACMARgAYAAMALwAOADUALwAKAA4ANQARADsANQAOABEAOwAVAEAAOwARABUAPwAYAEUAPwAVABgAKgAKADAAKgAHAAoACQAsAAsACQAnACwABQAnAAkABQAcACcADAAyAA8ADAAtADIADwA4ABMADwAzADgAEgA8ABYAEgA3ADwAFgBBABoAFgA8AEEAQgACABsAQgAlAAIAKwAAAAcAKwAgAAAAGAAAAAMAAAAKAAcACgARAA4AEQAYABUAGAAKAAAACgAYABEACAABAAQAAQAXABkAFwAQABQAEAAIAA0ACAAXAAEAFwAIABAAHwADAAAAHwAjAAMAJgAhAB0AJgAiACEAHAApACcAHAAeACkAJwAuACwAJwAoAC4ALQA0ADIALQAxADQAMwA6ADgAMwA2ADoANwA9ADwANwA5AD0APABDAEEAPAA+AEMAQgAkACUAQgBEACQAJgAGAAIAJgAdAAYA"),
 "lods": [0.00555185, PackedByteArray("NQAvADsAOwAvAEUAOwBFAD8AKgBFAC8AKgAfAEUAHwAjAEUACQAsAAsACQAnACwAJwAuACwAJwAoAC4ABQAnAAkABQAcACcAHAApACcAHAAeACkADAAyAA8ADAAtADIALQA0ADIALQAxADQADwAyADgADwA4ABMAMgA6ADgAMgA2ADoAEgA8ABYAEgA3ADwANwA9ADwANwA5AD0AFgA8AEEAFgBBABoAPABDAEEAPAA+AEMAQgACABsAQgBEACQAQgAkACUAQgAlAAIAJQAGAAIAJQAdAAYAJQAhAB0AJQAiACEACAABAAQACAAXAAEAAQAXABkAFwAIABAAEAAIAA0AFwAQABQA")],
-"material": SubResource("StandardMaterial3D_lkgtf"),
+"material": SubResource("StandardMaterial3D_gqkuy"),
 "name": "LampRed",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -179,7 +181,7 @@ _surfaces = [{
 "index_count": 180,
 "index_data": PackedByteArray("RgADACMARgAYAAMALwAOADUALwAKAA4ANQARADsANQAOABEAOwAVAEAAOwARABUAPwAYAEUAPwAVABgAKgAKADAAKgAHAAoACQAsAAsACQAnACwABQAnAAkABQAcACcADAAyAA8ADAAtADIADwA4ABMADwAzADgAEgA8ABYAEgA3ADwAFgBBABoAFgA8AEEAQgACABsAQgAlAAIAKwAAAAcAKwAgAAAAGAAAAAMAAAAKAAcACgARAA4AEQAYABUAGAAKAAAACgAYABEACAABAAQAAQAXABkAFwAQABQAEAAIAA0ACAAXAAEAFwAIABAAHwADAAAAHwAjAAMAJgAhAB0AJgAiACEAHAApACcAHAAeACkAJwAuACwAJwAoAC4ALQA0ADIALQAxADQAMwA6ADgAMwA2ADoANwA9ADwANwA5AD0APABDAEEAPAA+AEMAQgAkACUAQgBEACQAJgAGAAIAJgAdAAYA"),
 "lods": [0.00555186, PackedByteArray("NQAvADsAOwAvAEUAOwBFAD8AKgBFAC8AKgAfAEUAHwAjAEUACQAsAAsACQAnACwAJwAuACwAJwAoAC4ABQAnAAkABQAcACcAHAApACcAHAAeACkADAAyAA8ADAAtADIALQA0ADIALQAxADQADwAyADgADwA4ABMAMgA6ADgAMgA2ADoAEgA8ABYAEgA3ADwANwA9ADwANwA5AD0AFgA8AEEAFgBBABoAPABDAEEAPAA+AEMAQgACABsAQgBEACQAQgAkACUAQgAlAAIAJQAGAAIAJQAdAAYAJQAhAB0AJQAiACEACAABAAQACAAXAAEAAQAXABkAFwAIABAAEAAIAA0AFwAQABQA")],
-"material": SubResource("StandardMaterial3D_35xdy"),
+"material": SubResource("StandardMaterial3D_77ore"),
 "name": "LampGreen",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -228,15 +230,16 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ohjvn")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_j5w02"]
+bounce = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_snq0a"]
 size = Vector3(0.467773, 0.395508, 2.08258)
 
 [node name="DiverterAnimator" type="Node3D"]
-script = ExtResource("1_lkgtf")
+script = ExtResource("2_22iwn")
 
 [node name="Pusher" type="MeshInstance3D" parent="."]
-mesh = SubResource("ArrayMesh_8aygj")
+mesh = SubResource("ArrayMesh_0qbfj")
 skeleton = NodePath("")
 
 [node name="part1" type="MeshInstance3D" parent="Pusher"]
@@ -258,7 +261,7 @@ axis_lock_linear_y = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 10.0
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_j5w02")
 lock_rotation = true
 freeze = true

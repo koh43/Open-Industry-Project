@@ -1,9 +1,10 @@
 [gd_scene load_steps=28 format=4 uid="uid://nsio1mg8ru3w"]
 
-[ext_resource type="Script" uid="uid://d3jg66l8vh42f" path="res://src/LaserSensor/laser_sensor.gd" id="1_27ueu"]
+[ext_resource type="Script" uid="uid://c1uu7r81qr0kf" path="res://src/LaserSensor/LaserSensor.cs" id="1_ufgoq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_306xm"]
 resource_name = "color"
+cull_mode = 2
 albedo_color = Color(0.538065, 0.538065, 0.538065, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -44,6 +45,7 @@ shadow_mesh = SubResource("ArrayMesh_byvl2")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_miqi2"]
 resource_name = "color-2"
+cull_mode = 2
 albedo_color = Color(1, 0.736647, 0, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -84,6 +86,7 @@ shadow_mesh = SubResource("ArrayMesh_6vmck")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hw8my"]
 resource_name = "color-3"
+cull_mode = 2
 albedo_color = Color(0, 0, 0, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -124,6 +127,7 @@ shadow_mesh = SubResource("ArrayMesh_q4rax")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6d0fk"]
 resource_name = "color-4"
+cull_mode = 2
 albedo_color = Color(0.902393, 0.91608, 0.970104, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -164,6 +168,7 @@ shadow_mesh = SubResource("ArrayMesh_10ax3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xe6td"]
 resource_name = "color-5"
+cull_mode = 2
 albedo_color = Color(1, 1, 0, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -202,6 +207,7 @@ shadow_mesh = SubResource("ArrayMesh_t6awi")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pa6te"]
 resource_name = "color-6"
+cull_mode = 2
 albedo_color = Color(0.736647, 0.736647, 0.736647, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -242,6 +248,7 @@ shadow_mesh = SubResource("ArrayMesh_goypc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h27u3"]
 resource_name = "color-7"
+cull_mode = 2
 albedo_color = Color(0.882352, 0.882352, 0.882352, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -282,6 +289,7 @@ shadow_mesh = SubResource("ArrayMesh_bfoly")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sl0sn"]
 resource_name = "color-8"
+cull_mode = 2
 albedo_color = Color(0.736647, 0.736647, 0.929502, 1)
 metallic = 1.0
 roughness = 0.929289
@@ -318,15 +326,21 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ssju6")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_27ueu"]
-size = Vector3(0.42, 0.455, 0.55)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0hv5e"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_py1qu"]
-size = Vector3(0.14, 0.145, 0.14)
+[sub_resource type="CylinderMesh" id="CylinderMesh_gpdhd"]
+material = SubResource("StandardMaterial3D_0hv5e")
+top_radius = 0.003
+bottom_radius = 0.003
+height = 10.0
 
 [node name="LaserSensor" type="Node3D"]
-script = ExtResource("1_27ueu")
-tag_group_name = "TagGroup0"
+script = ExtResource("1_ufgoq")
+collisionColor = Color(1, 1, 0, 1)
+scanColor = Color(1, 0, 0, 1)
+DebugBeam = false
 metadata/_edit_group_ = true
 
 [node name="LaserSensor" type="Node3D" parent="."]
@@ -370,16 +384,14 @@ skeleton = NodePath("")
 mesh = SubResource("ArrayMesh_ol5se")
 skeleton = NodePath("")
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="RayMarker" type="Marker3D" parent="."]
+visible = false
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.294407, -0.239077)
-collision_layer = 3
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RayMarker"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 5)
+mesh = SubResource("CylinderMesh_gpdhd")
+skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.27906, -0.036006)
-shape = SubResource("BoxShape3D_27ueu")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.573, -0.0398384)
-shape = SubResource("BoxShape3D_py1qu")
+[node name="ScanTimer" type="Timer" parent="."]
+process_mode = 3
+wait_time = 0.25

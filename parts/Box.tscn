@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=4 uid="uid://bq16fe5njnr2i"]
 
-[ext_resource type="Script" uid="uid://dcenj3lymfh8n" path="res://src/Box/Box.gd" id="1_jl6cr"]
+[ext_resource type="Script" uid="uid://bnguio7ght8ko" path="res://src/Box/Box.cs" id="1_qlesu"]
 [ext_resource type="Texture2D" uid="uid://jf0rgqy7atfe" path="res://src/Box/Box_Cardboard box 24.png" id="2_bpads"]
 [ext_resource type="Texture2D" uid="uid://csdxeq0v42ln0" path="res://src/Box/Box_TexturesCom_Cardboard_Dirty_1K_roughness.png" id="3_rqr71"]
 [ext_resource type="Texture2D" uid="uid://dh3q2sjb870tg" path="res://src/Box/Box_TexturesCom_Cardboard_Dirty_1K_normal.png" id="4_y5qrc"]
@@ -9,10 +9,11 @@
 friction = 0.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h4we7"]
-resource_local_to_scene = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ekrlf"]
 resource_name = "Material.001"
+transparency = 4
+cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_bpads")
 metallic_texture = ExtResource("3_rqr71")
@@ -24,18 +25,20 @@ normal_texture = ExtResource("4_y5qrc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4011"]
 resource_name = "Material.002"
+cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.153326, 0.153326, 0.153326, 1)
 roughness = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qn5eo"]
 resource_name = "Material.003"
+cull_mode = 2
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.466659, 0.438254, 0.38347, 1)
 albedo_texture = ExtResource("3_rqr71")
 roughness = 0.5
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_jl6cr"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_e42t8"]
 _surfaces = [{
 "aabb": AABB(-1, -1, -1, 2, 2, 2),
 "format": 34359742465,
@@ -70,7 +73,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_edno1"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_odklf"]
 resource_name = "Box_Cube_001"
 _surfaces = [{
 "aabb": AABB(-1, -1, -1, 2, 2, 2),
@@ -111,18 +114,18 @@ _surfaces = [{
 "vertex_data": PackedByteArray("d6l5v4bWdD+MfRM9sqh7v2nZcT+MfRM9s7F5P4bWdD+MfRM97bB7P2nZcT+MfRM9s7F5P4bWdD+QFr887bB7P2nZcT+QFr88d6l5v4bWdD+AFr88sqh7v2nZcT+AFr88d6l5v4bWdD8qyDM+sqh7v2nZcT8qyDM+s7F5P4bWdD8qyDM+7bB7P2nZcT8qyDM+s7F5P4bWdD8Eugu+7bB7P2nZcT8Eugu+d6l5v4bWdD8Gugu+sqh7v2nZcT8Gugu+ljGVsf9//7/WNNW0/3//vyXO2bH/////ZMuatP////8lztmx/////2TLmrT/////ljGVsf9//7/WNNW0/3//v3kuOK5MgOm/NTf9tj6A579D0I+v4f/l/6LJNLbe/+j/dNC0rx0AGIDEyV+2HwAUgDAua664fxPABDc5t8N/FcA=")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_jl6cr")
+shadow_mesh = SubResource("ArrayMesh_e42t8")
 
 [node name="Box" type="Node3D"]
+process_mode = 3
 top_level = true
-script = ExtResource("1_jl6cr")
-size = Vector3(1, 1, 1)
-metadata/hijack_scale = true
+script = ExtResource("1_qlesu")
 metadata/_edit_group_ = true
+metadata/Spawned = true
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 process_mode = 3
-collision_layer = 10
+collision_layer = 8
 collision_mask = 15
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_jt2n8")
@@ -134,5 +137,5 @@ shape = SubResource("BoxShape3D_h4we7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("ArrayMesh_edno1")
+mesh = SubResource("ArrayMesh_odklf")
 skeleton = NodePath("")
