@@ -11,7 +11,14 @@
 metadata/_edit_lock_ = true
 
 [node name="Box" parent="." index="1" instance=ExtResource("3_55iuq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.07925, 3.29159, 3.85279)
+transform = Transform3D(-0.796446, 0, 0.60471, 0, 1, 0, -0.60471, 0, -0.796446, 6.69889, 0.252247, 5.45585)
 
 [node name="Rack_assy2" parent="." index="2" instance=ExtResource("4_bwp8a")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, -1.31134e-07, -3, 0, 3, -1.31134e-07, 3.70711, -0.78924, 7.97866)
+
+[node name="Camera3D" type="Camera3D" parent="." index="3"]
+transform = Transform3D(0.136633, -0.175548, 0.974943, 0.0319301, 0.984442, 0.172784, -0.990107, 0.00752207, 0.140112, 14.5557, 7.16152, 3.78874)
+fov = 37.8493
+
+[node name="Camera3D2" type="Camera3D" parent="." index="4"]
+transform = Transform3D(-0.899436, 0, -0.437053, 0, 1, 0, 0.437053, 0, -0.899436, -1.30388, 1.63831, 0.611888)
